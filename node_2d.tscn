@@ -22,7 +22,7 @@ text = "number:"
 offset_left = 208.0
 offset_right = 338.0
 offset_bottom = 40.0
-text = "5612"
+text = "654321"
 middle_mouse_paste_enabled = false
 
 [node name="Label_binary" type="Label" parent="."]
@@ -41,6 +41,7 @@ theme_override_font_sizes/font_size = 12
 text = "1010111101100"
 
 [node name="Label_point_size" type="Label" parent="."]
+visible = false
 offset_left = 8.0
 offset_top = 56.0
 offset_right = 96.0
@@ -48,14 +49,16 @@ offset_bottom = 82.0
 text = "point size:"
 
 [node name="Text_point_size" type="TextEdit" parent="."]
+visible = false
 offset_left = 96.0
 offset_top = 48.0
 offset_right = 154.0
 offset_bottom = 88.0
-text = "10"
+text = "8"
 middle_mouse_paste_enabled = false
 
 [node name="Label_width" type="Label" parent="."]
+visible = false
 offset_left = 168.0
 offset_top = 56.0
 offset_right = 224.0
@@ -63,11 +66,12 @@ offset_bottom = 82.0
 text = "width:"
 
 [node name="Text_width" type="TextEdit" parent="."]
+visible = false
 offset_left = 224.0
 offset_top = 48.0
 offset_right = 282.0
 offset_bottom = 88.0
-text = "72"
+text = "180"
 middle_mouse_paste_enabled = false
 
 [connection signal="text_changed" from="Text_number" to="." method="_on_number_changed"]

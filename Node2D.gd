@@ -3,11 +3,14 @@ extends Node2D
 func _draw():
 	var s = $Text_point_size.text as int
 	var o = 100 # offset
+	var b = $Text_binary.text
 	#for x in range(len($Text_binary.text)):
 	for x in range($Text_width.text as int):
-		var c = $Text_binary.text[x % len($Text_binary.text)] as int
-		for y in range(len($Text_binary.text)):
-			if c:
+		var c = b[x % len(b)] as int
+		for y in range(DisplayServer.window_get_size()[1]/s):
+			var di = b[(x+y) % len(b)] as int # increasing diagonals
+			var dd = b[(x-y) % len(b)] as int	# decreasing diagonals
+			if di == dd:
 				draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.WHITE)
 			else:
 				draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.BLACK)
@@ -29,6 +32,7 @@ func to_bin(x):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print(DisplayServer.window_get_size())
 	pass
 	#_draw()
 
@@ -39,11 +43,10 @@ func _process(_delta):
 
 
 func _on_number_changed():
-	if $Text_number.text.is_valid_int():
+	if $Text_number.text.is_valid_int() and $Text_number.text != "0":
 		$Text_binary.text = to_bin($Text_number.text as int)
 		queue_redraw()
-	
-
+		print($Text_number.text)
 
 func _on_binary_changed():
 	if $Text_binary.text.is_valid_int():
