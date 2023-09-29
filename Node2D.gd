@@ -1,5 +1,7 @@
 extends Node2D
 
+var start = Time.get_ticks_msec()
+
 func _draw():
 	var dispSize = DisplayServer.window_get_size()
 	#var s = $Text_point_size.text as int
@@ -71,13 +73,20 @@ func to_bin(x):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print(DisplayServer.window_get_size())
-	pass
-	#_draw()
+	#Engine.time_scale = .0001
 
-
+var lapsed = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	pass
+	if find_child("Button_play").button_pressed:
+		if ((Time.get_ticks_msec() - start) / 800) as int > lapsed:
+			lapsed = ((Time.get_ticks_msec() - start) / 800) as int
+			#print(lapsed)
+			#find_child("Text_number").text = str(find_child("Text_number").text as int + 1)
+			#if find_child("Text_number").text == "999999999999999999":
+			#	find_child("Text_number").text = "0"
+			#_on_number_changed()
+			_on_button_rnd()
 
 
 func _on_number_changed():
@@ -92,7 +101,7 @@ func _on_binary_changed():
 
 
 func _on_button_rnd():
-	find_child("Text_number").text = str(randi_range(999,99999999))
+	find_child("Text_number").text = str(randi_range(999,9999999999))
 	_on_number_changed()
 
 
@@ -105,3 +114,5 @@ func _on_param_changed():
 	else:
 		find_child("Text_param1").text = "-1"
 		find_child("Text_param2").text = "1"
+
+
