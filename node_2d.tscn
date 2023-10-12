@@ -28,14 +28,15 @@ vertical_alignment = 1
 offset_left = 8.0
 offset_top = 40.0
 offset_right = 712.0
-offset_bottom = 155.0
+offset_bottom = 197.0
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 7
 columns = 4
 
 [node name="Label_number" type="Label" parent="Grid_main"]
 layout_mode = 2
-text = "number:"
+text = "number"
+horizontal_alignment = 1
 
 [node name="Text_number" type="TextEdit" parent="Grid_main"]
 custom_minimum_size = Vector2(300, 35)
@@ -55,7 +56,8 @@ text = "play"
 
 [node name="Label_binary" type="Label" parent="Grid_main"]
 layout_mode = 2
-text = "binary:"
+text = "binary"
+horizontal_alignment = 1
 
 [node name="Text_binary" type="TextEdit" parent="Grid_main"]
 custom_minimum_size = Vector2(0, 35)
@@ -89,36 +91,38 @@ middle_mouse_paste_enabled = false
 layout_mode = 2
 text = "force redraw"
 
-[node name="Control2" type="Control" parent="Grid_main"]
+[node name="Empty" type="Control" parent="Grid_main"]
 layout_mode = 2
 
-[node name="Label_colors" type="Label" parent="Grid_main"]
+[node name="Label_patterns" type="Label" parent="Grid_main"]
 layout_mode = 2
-text = "color mode:	"
+text = "patterns"
+horizontal_alignment = 1
 
-[node name="HBC_colors" type="HBoxContainer" parent="Grid_main"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Grid_main"]
 layout_mode = 2
 
-[node name="CheckBox_1" type="CheckBox" parent="Grid_main/HBC_colors"]
+[node name="Text_patterns" type="TextEdit" parent="Grid_main/HBoxContainer"]
+custom_minimum_size = Vector2(40, 35)
 layout_mode = 2
-button_pressed = true
-button_group = SubResource("ButtonGroup_u2keb")
-text = "1"
-
-[node name="CheckBox_2" type="CheckBox" parent="Grid_main/HBC_colors"]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_u2keb")
-text = "2"
-
-[node name="CheckBox_3" type="CheckBox" parent="Grid_main/HBC_colors"]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_u2keb")
 text = "3"
+middle_mouse_paste_enabled = false
 
-[node name="CheckBox_4" type="CheckBox" parent="Grid_main/HBC_colors"]
+[node name="Label_x" type="Label" parent="Grid_main/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-button_group = SubResource("ButtonGroup_u2keb")
+text = "x 3"
+
+[node name="Label_patterns2" type="Label" parent="Grid_main/HBoxContainer"]
+layout_mode = 2
+text = "point size "
+horizontal_alignment = 1
+
+[node name="Text_pointsize" type="TextEdit" parent="Grid_main/HBoxContainer"]
+custom_minimum_size = Vector2(40, 35)
+layout_mode = 2
 text = "4"
+middle_mouse_paste_enabled = false
 
 [node name="Button_multiple" type="Button" parent="Grid_main"]
 visible = false
@@ -130,7 +134,7 @@ layout_mode = 2
 
 [node name="Label_param1" type="Label" parent="Grid_main/HBC_params"]
 layout_mode = 2
-text = "param1:"
+text = " offset1 "
 
 [node name="Text_param1" type="TextEdit" parent="Grid_main/HBC_params"]
 custom_minimum_size = Vector2(40, 0)
@@ -140,7 +144,7 @@ middle_mouse_paste_enabled = false
 
 [node name="Label_param2" type="Label" parent="Grid_main/HBC_params"]
 layout_mode = 2
-text = "param1:"
+text = " offset 2 "
 
 [node name="Text_param2" type="TextEdit" parent="Grid_main/HBC_params"]
 custom_minimum_size = Vector2(40, 35)
@@ -148,8 +152,40 @@ layout_mode = 2
 text = "1"
 middle_mouse_paste_enabled = false
 
-[node name="Control3" type="Control" parent="Grid_main"]
+[node name="Empty2" type="Control" parent="Grid_main"]
 layout_mode = 2
+
+[node name="Label_colors" type="Label" parent="Grid_main"]
+layout_mode = 2
+text = "color mode"
+
+[node name="HBC_colors" type="HBoxContainer" parent="Grid_main"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CheckBox_1" type="CheckBox" parent="Grid_main/HBC_colors"]
+layout_mode = 2
+button_pressed = true
+button_group = SubResource("ButtonGroup_u2keb")
+text = "2"
+
+[node name="CheckBox_2" type="CheckBox" parent="Grid_main/HBC_colors"]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_u2keb")
+text = "2 inv"
+
+[node name="CheckBox_3" type="CheckBox" parent="Grid_main/HBC_colors"]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_u2keb")
+text = "4"
+
+[node name="CheckBox_4" type="CheckBox" parent="Grid_main/HBC_colors"]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_u2keb")
+text = "4 inv"
+
+[node name="menu_end" type="Node2D" parent="."]
+position = Vector2(0, 200)
 
 [connection signal="text_changed" from="Grid_main/Text_number" to="." method="_on_number_changed"]
 [connection signal="button_up" from="Grid_main/Button_rnd" to="." method="_on_button_rnd"]
@@ -157,10 +193,12 @@ layout_mode = 2
 [connection signal="text_changed" from="Grid_main/Text_point_size" to="." method="_on_number_changed"]
 [connection signal="text_changed" from="Grid_main/Text_width" to="." method="_on_number_changed"]
 [connection signal="button_up" from="Grid_main/Button_redraw" to="." method="_redraw"]
+[connection signal="text_changed" from="Grid_main/HBoxContainer/Text_patterns" to="." method="_on_number_changed"]
+[connection signal="text_changed" from="Grid_main/HBoxContainer/Text_pointsize" to="." method="_on_number_changed"]
+[connection signal="button_up" from="Grid_main/Button_multiple" to="." method="_redraw"]
+[connection signal="text_changed" from="Grid_main/HBC_params/Text_param1" to="." method="_on_number_changed"]
+[connection signal="text_changed" from="Grid_main/HBC_params/Text_param2" to="." method="_on_number_changed"]
 [connection signal="pressed" from="Grid_main/HBC_colors/CheckBox_1" to="." method="_redraw"]
 [connection signal="pressed" from="Grid_main/HBC_colors/CheckBox_2" to="." method="_redraw"]
 [connection signal="pressed" from="Grid_main/HBC_colors/CheckBox_3" to="." method="_redraw"]
 [connection signal="pressed" from="Grid_main/HBC_colors/CheckBox_4" to="." method="_redraw"]
-[connection signal="button_up" from="Grid_main/Button_multiple" to="." method="_redraw"]
-[connection signal="text_changed" from="Grid_main/HBC_params/Text_param1" to="." method="_on_number_changed"]
-[connection signal="text_changed" from="Grid_main/HBC_params/Text_param2" to="." method="_on_number_changed"]

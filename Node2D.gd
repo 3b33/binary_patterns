@@ -3,57 +3,65 @@ extends Node2D
 var start = Time.get_ticks_msec()
 
 func _draw():
-	var dispSize = DisplayServer.window_get_size()
-	#var s = $Text_point_size.text as int
-	var tempS = 60
-	var s = dispSize[0]/tempS
-	var o = 160 # y offset for menu
 	var b = find_child("Text_binary").text
-	var p1 = find_child("Text_param1").text as int
-	var p2 = find_child("Text_param2").text as int
-	#for x in range(len($Text_binary.text)):
-	for x in range(tempS):
-		var c = b[x % len(b)] as int
-		for y in range(dispSize[1]/s):
-			var di = b[(x+p2*y) % len(b)] as int # increasing diagonals
-			var dd = b[(x+p1*y) % len(b)] as int	# decreasing diagonals
-#			if find_child("CheckBox_4").button_pressed:
-#				if di == 1 and dd == 1:
-#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(1,1,.5))
-#				elif di == 0 and dd == 0:
-#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(1,.9,.5))
-#				elif di == 1 and dd == 0:
-#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(.1,.3,.3))	# dark cyan
-#				elif di == 0 and dd == 1:
-#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(.2,.2,.5))	# dark blue
-			if find_child("CheckBox_1").button_pressed:
-				if di == dd:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.WHITE)
-				else:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.BLACK)
-			if find_child("CheckBox_2").button_pressed:
-				if di == dd:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.BLACK)
-				else:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.WHITE)
-			elif find_child("CheckBox_3").button_pressed:
-				if di == 1 and dd == 1:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.WHITE)
-				elif di == 1 and dd == 0:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.DIM_GRAY)
-				elif di == 0 and dd == 0:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.LIGHT_GRAY)
-				else:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.BLACK)
-			elif find_child("CheckBox_4").button_pressed:
-				if di == 1 and dd == 1:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.BLACK)
-				elif di == 1 and dd == 0:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.LIGHT_GRAY)
-				elif di == 0 and dd == 0:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.DIM_GRAY)
-				else:
-					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color.WHITE)
+	var div = int(find_child("Text_patterns").text)
+	var b_add = 0
+	for piy in range(div):
+		for pix in range(div):
+			var dispSize = DisplayServer.window_get_size()
+			#var s = $Text_point_size.text as int
+			var s = int(find_child("Text_pointsize").text)
+			var o = find_child("menu_end").position.y # y offset for menu
+			b_add += 1
+			if pix + piy > 0:
+				b = to_bin(find_child("Text_number").text as int + b_add)
+			var p1 = find_child("Text_param1").text as int
+			var p2 = find_child("Text_param2").text as int
+			#for x in range(len($Text_binary.text)):
+			var pattern_width = dispSize[0]/div
+			for x in range(ceil(pattern_width/s)):
+				var c = b[x % len(b)] as int
+				for y in range(dispSize[1]/s/div):
+					var di = b[(x+p2*y) % len(b)] as int	# increasing diagonals
+					var dd = b[(x+p1*y) % len(b)] as int	# decreasing diagonals
+		#			if find_child("CheckBox_4").button_pressed:
+		#				if di == 1 and dd == 1:
+		#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(1,1,.5))
+		#				elif di == 0 and dd == 0:
+		#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(1,.9,.5))
+		#				elif di == 1 and dd == 0:
+		#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(.1,.3,.3))	# dark cyan
+		#				elif di == 0 and dd == 1:
+		#					draw_rect(Rect2(x*s,y*s+o,x*s+s,y*s+s+o), Color(.2,.2,.5))	# dark blue
+					var rect = Rect2(x*s+pix*pattern_width,y*s+o+piy*pattern_width,x*s+s+pix*pattern_width,y*s+s+o+piy*pattern_width)
+					if find_child("CheckBox_1").button_pressed:
+						if di == dd:
+							draw_rect(rect, Color.WHITE)
+						else:
+							draw_rect(rect, Color.BLACK)
+					if find_child("CheckBox_2").button_pressed:
+						if di == dd:
+							draw_rect(rect, Color.BLACK)
+						else:
+							draw_rect(rect, Color.WHITE)
+					elif find_child("CheckBox_3").button_pressed:
+						if di == 1 and dd == 1:
+							draw_rect(rect, Color.WHITE)
+						elif di == 1 and dd == 0:
+							draw_rect(rect, Color.DIM_GRAY)
+						elif di == 0 and dd == 0:
+							draw_rect(rect, Color.LIGHT_GRAY)
+						else:
+							draw_rect(rect, Color.BLACK)
+					elif find_child("CheckBox_4").button_pressed:
+						if di == 1 and dd == 1:
+							draw_rect(rect, Color.BLACK)
+						elif di == 1 and dd == 0:
+							draw_rect(rect, Color.LIGHT_GRAY)
+						elif di == 0 and dd == 0:
+							draw_rect(rect, Color.DIM_GRAY)
+						else:
+							draw_rect(rect, Color.WHITE)
 
 func array_to_string(arr: Array) -> String:
 	var s = ""
